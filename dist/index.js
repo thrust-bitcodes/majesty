@@ -8,14 +8,14 @@ const ANSI_DARK_GREY = "\u001B[90m"
 const ANSI_LIGHT_RED = "\u001B[91m"
 const ANSI_LIGHT_BLUE = "\u001B[94m"
 
-var chai = require("./chai").chai
+var chai = require("./chai")
 // print("chai => ", JSON.stringify( Object.getOwnPropertyNames(chai) ))
 
 
 let majesty = {
     failures: [],
     successes: [],
-    suites: [], 
+    suites: [],
     describe: describe,
     it: it,
     run: run,
@@ -49,7 +49,7 @@ let majesty = {
 
 function generateId() {
     var nId = 0
-    
+
     return function() {
         return ++nId
     }
@@ -86,11 +86,11 @@ function determineParentSuite(desc) {
 
         if (lastChild && lastChild.isOpen)
             return lastChild
-        else 
+        else
             return lastSuite
     } else {
         return null
-    }  
+    }
 }
 
 
@@ -202,7 +202,7 @@ function run(callbackTestFunc) {
     })
 
     this.report.executionFinished()
-    
+
     return {
         success: this.successes,
         failure: this.failures
