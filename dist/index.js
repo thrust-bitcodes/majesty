@@ -199,7 +199,7 @@ function run(callbackTestFunc) {
         processSuite(suite)
 
         runFunc(this.afterEachFnc)
-    })
+    }.bind(this))
 
     this.report.executionFinished()
 
