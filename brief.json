@@ -4,6 +4,5 @@
     "path": "dist",
     "version": "0.1.0",
     "author": "Nery Jr",
-    "dependencies": {
-    }
+    "dependencies": {}
 }

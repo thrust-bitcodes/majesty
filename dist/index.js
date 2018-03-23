@@ -9,19 +9,23 @@ const ANSI_LIGHT_RED = "\u001B[91m"
 const ANSI_LIGHT_BLUE = "\u001B[94m"
 
 var chai = require("./chai").chai
-// print("chai => ", JSON.stringify( Object.getOwnPropertyNames(chai) ))
-
 
 let majesty = {
     failures: [],
     successes: [],
-    suites: [], 
+    suites: [],
     describe: describe,
     it: it,
     run: run,
     beforeEach: beforeEach,
     afterEach: afterEach,
     nextId: generateId(),
+    clean: function() {
+        this.failures = []
+        this.successes = []
+        // this.suites.length = 0
+        this.suites.splice(0, this.suites.length)
+    },
     report: {
         startExecution: function() {
             print(ANSI_LIGHT_BLUE + "\n### Majesty started ##################################################", ANSI_RESET)
@@ -31,17 +35,17 @@ let majesty = {
         },
         startOfSuite: function(suite) {
             // print(ANSI_WHITE, Array(suite.level+1).join("\t"), suite.description, ANSI_DARK_GREY, "running...", ANSI_RESET)
-            print(ANSI_WHITE, Array(suite.level+1).join("    "), suite.description, ANSI_RESET)
+            print(ANSI_WHITE, Array(suite.level + 1).join("    "), suite.description, ANSI_RESET)
         },
         endOfSuite: function(suite) {
             let result = (suite.passed) ? ANSI_GREEN + "[success]" + ANSI_DARK_GREY + "!" : ANSI_LIGHT_RED + "error" + ANSI_DARK_GREY + "."
 
-            print(ANSI_DARK_GREY, Array(suite.level+1).join("    "), "Finished with", result, ANSI_RESET)
+            print(ANSI_DARK_GREY, Array(suite.level + 1).join("    "), "Finished with", result, ANSI_RESET)
         },
         scenarioExecuted: function(scenario) {
             let result = "" + ANSI_WHITE + "[" + ((scenario.passed) ? ANSI_GREEN + "OK" : ANSI_LIGHT_RED + "NO") + ANSI_WHITE + "]" + ANSI_RESET
 
-            print(Array(scenario.level+1).join("    "), result, ANSI_WHITE + scenario.description, ANSI_RESET)
+            print(Array(scenario.level + 1).join("    "), result, ANSI_WHITE + scenario.description, ANSI_RESET)
         }
     }
 }
@@ -49,7 +53,7 @@ let majesty = {
 
 function generateId() {
     var nId = 0
-    
+
     return function() {
         return ++nId
     }
@@ -86,18 +90,18 @@ function determineParentSuite(desc) {
 
         if (lastChild && lastChild.isOpen)
             return lastChild
-        else 
+        else
             return lastSuite
     } else {
         return null
-    }  
+    }
 }
 
 
 function describe(description, specFunc) {
     let parent = determineParentSuite()
     let queue = (parent) ? parent.children : majesty.suites
-    let suite = createSuite(description, (parent)? parent.level + 1 : 0)
+    let suite = createSuite(description, (parent) ? parent.level + 1 : 0)
 
     queue.push(suite)
     specFunc()
@@ -144,7 +148,7 @@ function processScenario(scenario) {
         majesty.successes.push(scenario.description)
     } catch (e) {
         scenario.passed = false
-        majesty.failures.push({scenario: scenario.description, execption: e})
+        majesty.failures.push({ scenario: scenario.description, execption: e })
     }
 
     this.report.scenarioExecuted(scenario)
@@ -186,6 +190,7 @@ function processSuite(suite) {
 
 
 function run(callbackTestFunc) {
+    this.clean()
     processSuite = processSuite.bind(this)
     processScenario = processScenario.bind(this)
 
@@ -202,12 +207,11 @@ function run(callbackTestFunc) {
     })
 
     this.report.executionFinished()
-    
+
     return {
         success: this.successes,
         failure: this.failures
     }
 }
 
-
-exports = majesty
+exports = Object.assign({}, majesty)
