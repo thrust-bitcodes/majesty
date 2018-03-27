@@ -30,8 +30,17 @@ var testes2 = function(describe, it, beforeEach, afterEach, expect, should, asse
     it('2.2 - XPTO', function() {
       expect(1).to.equal(1)
     })
+
+    it('2.3 - ERROR', function() {
+      expect(1).to.equal(2)
+    })
   })
 }
 
-majesty.run(testes1)
-majesty.run(testes2)
+var rs1 = majesty.run(testes1)
+print('', rs1.success.length, ' scenarios executed with success and')
+print('', rs1.failure.length, ' scenarios executed with failure.\n')
+
+var rs2 = majesty.run(testes2)
+print('', rs2.success.length, ' scenarios executed with success and')
+print('', rs2.failure.length, ' scenarios executed with failure.\n')

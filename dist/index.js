@@ -135,10 +135,10 @@ function processScenario(scenario) {
   try {
     scenario.itFunc()
     scenario.passed = true
-    majesty.successes.push(scenario.description)
+    this.successes.push(scenario.description)
   } catch (e) {
     scenario.passed = false
-    majesty.failures.push({ scenario: scenario.description, execption: e })
+    this.failures.push({ scenario: scenario.description, execption: e })
   }
 
   this.report.scenarioExecuted(scenario)
