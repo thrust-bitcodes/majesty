@@ -64,4 +64,4 @@ v0.1.2 - Fix: limpando histórico de execução de testes
 * Correção para execuções subsequentes do método [run]
 * Criação de suite test case para avaliação do _majesty_
 
-v0.1.2 - Fix: Ajustando contexto da execução das suites
+v0.1.1 - Fix: Ajustando contexto da execução das suites
