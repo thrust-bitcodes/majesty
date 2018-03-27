@@ -57,6 +57,11 @@ Para ver um caso real de uso do *bitcode*, acesse [thrust-bitcodes/database](htt
 
 ## What's new
 
-v0.1.1 - Fix: limpando histórico de execução de testes
+v0.1.3 - Fix: corrigindo o contador dos casos executados com sucesso ou erro
+* Correção do método [processScenario] para armazenar corretamente os casos executados com sucesso ou erro
+
+v0.1.2 - Fix: limpando histórico de execução de testes
 * Correção para execuções subsequentes do método [run]
 * Criação de suite test case para avaliação do _majesty_
+
+v0.1.2 - Fix: Ajustando contexto da execução das suites
