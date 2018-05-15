@@ -1,4 +1,4 @@
-Majesty
+Majesty [![Build Status](https://travis-ci.org/thrust-bitcodes/majesty.svg?branch=master)](https://travis-ci.org/thrust-bitcodes/majesty)
 ===============
 
 majesty é um *bitcode* de testes para [ThrustJS](https://github.com/thrustjs/thrust), que utiliza [Chai](http://chaijs.com/) como biblioteca de asserção.
