@@ -41,6 +41,23 @@ var rs1 = majesty.run(testes1)
 print('', rs1.success.length, ' scenarios executed with success and')
 print('', rs1.failure.length, ' scenarios executed with failure.\n')
 
+rs1.failure.forEach(function (fail) {
+  print("[" + fail.scenario + "] =>", fail.execption)
+})
+
 var rs2 = majesty.run(testes2)
 print('', rs2.success.length, ' scenarios executed with success and')
 print('', rs2.failure.length, ' scenarios executed with failure.\n')
+
+rs2.failure.forEach(function (fail) {
+  print("[" + fail.scenario + "] =>", fail.execption)
+})
+
+rs1.failure.forEach(function (fail) {
+  print("[" + fail.scenario + "] =>", fail.execption)
+})
+
+var totalErrors = rs1.failure.length + rs2.failure.length;
+var expectedErrors = 1; //'2.3 - ERROR'
+
+exit(totalErrors - expectedErrors)
