@@ -2,3 +2,4 @@
 .eslintrc.json
 jsconfig.json
 thrust.d.ts
+/test/.lib

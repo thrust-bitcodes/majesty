@@ -1,0 +1,10 @@
+{
+    "description": "Majesty tests",
+    "name": "majesty-test",
+    "author": "Bruno Machado",
+    "dependencies": {
+        "bitcodes": [
+            "thrust-bitcodes/majesty"
+        ]
+    }
+}

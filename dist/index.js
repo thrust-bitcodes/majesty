@@ -21,40 +21,19 @@ var majesty = {
   beforeEach: beforeEach,
   afterEach: afterEach,
   nextId: generateId(),
-  clean: function() {
+  clean: function () {
     this.failures = []
     this.successes = []
     // this.suites.length = 0
     this.suites.splice(0, this.suites.length)
   },
-  report: {
-    startExecution: function() {
-      print(ANSI_LIGHT_BLUE + '\n### Majesty started ##################################################', ANSI_RESET)
-    },
-    executionFinished: function() {
-      print(ANSI_LIGHT_BLUE + '### Majesty finished #################################################\n', ANSI_RESET)
-    },
-    startOfSuite: function(suite) {
-      // print(ANSI_WHITE, Array(suite.level+1).join("\t"), suite.description, ANSI_DARK_GREY, "running...", ANSI_RESET)
-      print(ANSI_WHITE, Array(suite.level + 1).join('    '), suite.description, ANSI_RESET)
-    },
-    endOfSuite: function(suite) {
-      var result = (suite.passed) ? ANSI_GREEN + '[success]' + ANSI_DARK_GREY + '!' : ANSI_LIGHT_RED + 'error' + ANSI_DARK_GREY + '.'
-
-      print(ANSI_DARK_GREY, Array(suite.level + 1).join('    '), 'Finished with', result, ANSI_RESET)
-    },
-    scenarioExecuted: function(scenario) {
-      var result = '' + ANSI_WHITE + '[' + ((scenario.passed) ? ANSI_GREEN + 'OK' : ANSI_LIGHT_RED + 'NO') + ANSI_WHITE + ']' + ANSI_RESET
-
-      print(Array(scenario.level + 1).join('    '), result, ANSI_WHITE + scenario.description, ANSI_RESET)
-    }
-  }
+  report: require('thrust-bitcodes/majesty-report-console')
 }
 
 function generateId() {
   var nId = 0
 
-  return function() {
+  return function () {
     return ++nId
   }
 }
@@ -154,13 +133,13 @@ function processSuite(suite) {
   this.report.startOfSuite(suite)
 
   if (hasScenario(suite)) {
-    suite.scenarios.forEach(function(scenario) {
+    suite.scenarios.forEach(function (scenario) {
       runFunc(suite.beforeEachFnc)
       suite.passed &= processScenario(scenario)
       runFunc(suite.afterEachFnc)
     })
   } else if (hasEmbeddedSuite(suite)) {
-    suite.children.forEach(function(embSuite) {
+    suite.children.forEach(function (embSuite) {
       runFunc(suite.beforeEachFnc)
       suite.passed &= processSuite(embSuite)
       runFunc(suite.afterEachFnc)
@@ -181,7 +160,7 @@ function run(callbackTestFunc) {
 
   this.report.startExecution()
 
-  this.suites.forEach(function(suite) {
+  this.suites.forEach(function (suite) {
     runFunc(this.beforeEachFnc)
 
     processSuite(suite)
