@@ -168,12 +168,14 @@ function run(callbackTestFunc) {
     runFunc(this.afterEachFnc)
   }.bind(this))
 
-  this.report.executionFinished()
-
-  return {
+  var rs = {
     success: this.successes,
     failure: this.failures
-  }
+  };
+
+  this.report.executionFinished(rs)
+
+  return rs;
 }
 
 exports = Object.assign({}, majesty)
